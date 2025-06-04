@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## next
+- add BLAKE2b-256 hashing support
 
 ## [0.6.102] - 01-Apr-2025
 
