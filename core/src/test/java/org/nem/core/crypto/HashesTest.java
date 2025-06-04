@@ -8,10 +8,10 @@ import org.junit.*;
 import org.nem.core.test.Utils;
 
 public class HashesTest {
-	private static final HashTester SHA3_256_TESTER = new HashTester(Hashes::sha3_256, 32);
-	private static final HashTester SHA3_512_TESTER = new HashTester(Hashes::sha3_512, 64);
-       private static final HashTester RIPEMD160_TESTER = new HashTester(Hashes::ripemd160, 20);
-       private static final HashTester BLAKE2B_256_TESTER = new HashTester(Hashes::blake2b_256, 32);
+    private static final HashTester SHA3_256_TESTER = new HashTester(Hashes::sha3_256, Hashes.Algorithm.SHA3_256);
+    private static final HashTester SHA3_512_TESTER = new HashTester(Hashes::sha3_512, Hashes.Algorithm.SHA3_512);
+       private static final HashTester RIPEMD160_TESTER = new HashTester(Hashes::ripemd160, Hashes.Algorithm.RIPEMD160);
+       private static final HashTester BLAKE2B_256_TESTER = new HashTester(Hashes::blake2b_256, Hashes.Algorithm.BLAKE2B_256);
 
 	// region sha3_256
 
@@ -90,10 +90,10 @@ public class HashesTest {
 	}
 
 	@Test
-        public void ripemd160GeneratesDifferentHashForDifferentInputs() {
-                // Assert:
-                RIPEMD160_TESTER.assertHashIsDifferentForDifferentInputs();
-        }
+	public void ripemd160GeneratesDifferentHashForDifferentInputs() {
+		// Assert:
+		RIPEMD160_TESTER.assertHashIsDifferentForDifferentInputs();
+	}
 
        // endregion
 
@@ -101,26 +101,26 @@ public class HashesTest {
 
        @Test
        public void blake2b_256HashHasExpectedByteLength() {
-               // Assert:
-               BLAKE2B_256_TESTER.assertHashHasExpectedLength();
+	       // Assert:
+	       BLAKE2B_256_TESTER.assertHashHasExpectedLength();
        }
 
        @Test
        public void blake2b_256GeneratesSameHashForSameInputs() {
-               // Assert:
-               BLAKE2B_256_TESTER.assertHashIsSameForSameInputs();
+	       // Assert:
+	       BLAKE2B_256_TESTER.assertHashIsSameForSameInputs();
        }
 
        @Test
        public void blake2b_256GeneratesSameHashForSameMergedInputs() {
-               // Assert:
-               BLAKE2B_256_TESTER.assertHashIsSameForSplitInputs();
+	       // Assert:
+	       BLAKE2B_256_TESTER.assertHashIsSameForSplitInputs();
        }
 
        @Test
        public void blake2b_256GeneratesDifferentHashForDifferentInputs() {
-               // Assert:
-               BLAKE2B_256_TESTER.assertHashIsDifferentForDifferentInputs();
+	       // Assert:
+	       BLAKE2B_256_TESTER.assertHashIsDifferentForDifferentInputs();
        }
 
        // endregion
@@ -139,22 +139,22 @@ public class HashesTest {
 		assertHashesAreDifferent(Hashes::sha3_256, Hashes::sha3_512);
 	}
 
-        @Test
-        public void sha3_512AndRipemd160GenerateDifferentHashForSameInputs() {
-                // Assert:
-                assertHashesAreDifferent(Hashes::sha3_512, Hashes::ripemd160);
-        }
+	@Test
+	public void sha3_512AndRipemd160GenerateDifferentHashForSameInputs() {
+		// Assert:
+		assertHashesAreDifferent(Hashes::sha3_512, Hashes::ripemd160);
+	}
 
        @Test
        public void blake2b_256AndSha3_256GenerateDifferentHashForSameInputs() {
-               // Assert:
-               assertHashesAreDifferent(Hashes::blake2b_256, Hashes::sha3_256);
+	       // Assert:
+	       assertHashesAreDifferent(Hashes::blake2b_256, Hashes::sha3_256);
        }
 
        @Test
        public void blake2b_256AndRipemd160GenerateDifferentHashForSameInputs() {
-               // Assert:
-               assertHashesAreDifferent(Hashes::blake2b_256, Hashes::ripemd160);
+	       // Assert:
+	       assertHashesAreDifferent(Hashes::blake2b_256, Hashes::ripemd160);
        }
 
 	private static void assertHashesAreDifferent(final Function<byte[], byte[]> hashFunction1,
@@ -184,6 +184,10 @@ public class HashesTest {
 					input
 			});
 			this.expectedHashLength = expectedHashLength;
+		}
+
+		public HashTester(final Function<byte[][], byte[]> hashMultipleFunction, final Hashes.Algorithm algorithm) {
+			this(hashMultipleFunction, algorithm.length());
 		}
 
 		public void assertHashHasExpectedLength() {
