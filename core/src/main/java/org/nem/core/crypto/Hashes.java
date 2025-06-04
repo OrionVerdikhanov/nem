@@ -42,9 +42,20 @@ public class Hashes {
 	 * @return The hash of the concatenated inputs.
 	 * @throws CryptoException if the hash operation failed.
 	 */
-	public static byte[] ripemd160(final byte[]... inputs) {
-		return hash("RIPEMD160", inputs);
-	}
+        public static byte[] ripemd160(final byte[]... inputs) {
+                return hash("RIPEMD160", inputs);
+        }
+
+       /**
+        * Performs a BLAKE2b-256 hash of the concatenated inputs.
+        *
+        * @param inputs The byte arrays to concatenate and hash.
+        * @return The hash of the concatenated inputs.
+        * @throws CryptoException if the hash operation failed.
+        */
+       public static byte[] blake2b_256(final byte[]... inputs) {
+               return hash("BLAKE2B-256", inputs);
+       }
 
 	private static byte[] hash(final String algorithm, final byte[]... inputs) {
 		return ExceptionUtils.propagate(() -> {
