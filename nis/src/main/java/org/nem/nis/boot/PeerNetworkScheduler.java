@@ -52,19 +52,31 @@ public class PeerNetworkScheduler implements AutoCloseable {
 	private final TimeProvider timeProvider;
 	private final HarvestingTask harvestingTask;
 	private final List<NemAsyncTimerVisitor> timerVisitors = new ArrayList<>();
-	private final List<AsyncTimer> timers = new ArrayList<>();
-	private final Executor executor = Executors.newCachedThreadPool();
+        private final List<AsyncTimer> timers = new ArrayList<>();
+        private final Executor executor;
 
-	/**
-	 * Creates a new scheduler.
-	 *
-	 * @param timeProvider The time provider.
-	 * @param harvestingTask The harvesting task.
-	 */
-	public PeerNetworkScheduler(final TimeProvider timeProvider, final HarvestingTask harvestingTask) {
-		this.timeProvider = timeProvider;
-		this.harvestingTask = harvestingTask;
-	}
+       /**
+        * Creates a new scheduler.
+        *
+        * @param timeProvider The time provider.
+        * @param harvestingTask The harvesting task.
+        */
+       public PeerNetworkScheduler(final TimeProvider timeProvider, final HarvestingTask harvestingTask) {
+               this(timeProvider, harvestingTask, Runtime.getRuntime().availableProcessors());
+       }
+
+       /**
+        * Creates a new scheduler specifying the executor thread count.
+        *
+        * @param timeProvider The time provider.
+        * @param harvestingTask The harvesting task.
+        * @param threadCount The executor thread count.
+        */
+       public PeerNetworkScheduler(final TimeProvider timeProvider, final HarvestingTask harvestingTask, final int threadCount) {
+               this.timeProvider = timeProvider;
+               this.harvestingTask = harvestingTask;
+               this.executor = Executors.newFixedThreadPool(threadCount);
+       }
 
 	/**
 	 * Gets all timer visitors.
