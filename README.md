@@ -10,7 +10,7 @@ The main folders are:
 |----------|----------------------------------|
 | `core`   | The [core](core) dependency.     |
 | `deploy` | The [deploy](deploy) dependency. |
-| `peer`   | The [peer](peer) dependency.     |
+| `peer`   | The [peer](peer) dependency.     | 
 | `nis`    | The [nis](nis) dependency.       |
 
 ## Building the package
@@ -75,6 +75,7 @@ nis.remoteAccountForkHeight = 1
 nis.mosaicRedefinitionForkHeight = 1
 EOF
 ```
+
 
 ## Contributing
 
